@@ -3,7 +3,6 @@
   <img src="https://raw.githubusercontent.com/RipleyBooya/ssh-tunnel/refs/heads/main/ssh-tunnel.webp" alt="SSH Tunnel Logo" width="200"/>
 </p>
 
-
 ## 🚀 **Quick Start**
 For a fast setup, run:
 ```sh
@@ -109,9 +108,20 @@ This project is based on:
 ## 📜 License
 This project is licensed under the **MIT License**.  
 You are free to use, modify, and distribute it.  
-Read the full license [here](https://opensource.org/licenses/MIT).
+Read the full license [here](https://opensource.org/licenses/MIT).  
+
+📌 **Find the source code & contribute on [GitHub](https://github.com/RipleyBooya/ssh-tunnel)!**  
+
 
 ---
 
 ## 🤖 AI Assistance & Acknowledgment
 This project was built with the help of an **AI-powered assistant (LLM)** to improve structure, efficiency, and documentation clarity.
+
+## 🔗 Project Links & Contributions
+This project is open-source and welcomes contributions!  
+
+- 🛠 **Source Code & Issues:** [GitHub Repository](https://github.com/RipleyBooya/ssh-tunnel)  
+- 🐳 **Docker Hub Page:** [Docker Image](https://hub.docker.com/r/ripleybooya/ssh-tunnel)  
+
+If you find any issues or have suggestions, feel free to open a GitHub issue or contribute! 🚀  
