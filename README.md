@@ -140,7 +140,8 @@ Read the full license [here](https://opensource.org/licenses/MIT).
 ---
 
 ## 🤖 AI Assistance & Acknowledgment
-This project was built with the help of an **AI-powered assistant (LLM)** to improve structure, efficiency, and documentation clarity.
+ - This project was built with the help of an **AI-powered assistant (LLM)** to improve structure, efficiency, and documentation clarity.
+ - A big thank to [Xénophée](https://github.com/Xenophee) for the inspiration that started this project.
 
 
 ## 🏗️ How to Build the Image
