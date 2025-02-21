@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  ssh-tunnel:
+    image: ripleybooya/ssh-tunnel
+    container_name: ssh-tunnel
+    restart: always
+    networks:
+      - internal
+    environment:
+      SSH_HOST: "your-server.com"
+      SSH_USER: "your-username"
+      REMOTE_PORTS: "127.0.0.1:5432 127.0.0.1:443"
+      LOCAL_PORTS: "15432 8443"
+    volumes:
+      - /path/to/id_rsa:/tmp/id_rsa:ro
+
+networks:
+  internal:
+    driver: bridge
