@@ -118,6 +118,8 @@ Read the full license [here](https://opensource.org/licenses/MIT).
 ## 🤖 AI Assistance & Acknowledgment
 This project was built with the help of an **AI-powered assistant (LLM)** to improve structure, efficiency, and documentation clarity.
 
+---
+
 ## 🔗 Project Links & Contributions
 This project is open-source and welcomes contributions!  
 
