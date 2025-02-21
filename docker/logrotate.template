@@ -1,0 +1,8 @@
+/var/log/ssh-tunnel/tunnel.log {
+    ${LOGROTATE_FREQUENCY}
+    rotate ${LOGROTATE_ROTATE}
+    ${LOGROTATE_COMPRESS:+compress}
+    missingok
+    notifempty
+    copytruncate
+}
