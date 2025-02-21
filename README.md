@@ -46,6 +46,8 @@ docker run -d --name ssh-tunnel \
 
 ### **2️⃣ Using `docker-compose.yml`**
 For easier management, use **Docker Compose**:
+
+#### **2️⃣.1️⃣ Using a Custom Network (Recommended)**
 ```yaml
 version: '3.8'
 
@@ -68,6 +70,31 @@ networks:
   internal:
     driver: bridge
 ```
+
+#### **2️⃣.2️⃣ Using Host Network Mode (Alternative)**
+If you need the ports to be accessible outside Docker, use `network_mode: host` :
+
+```yaml
+version: '3.8'
+
+services:
+  ssh-tunnel:
+    image: ripleybooya/ssh-tunnel
+    container_name: ssh-tunnel
+    restart: always
+    network_mode: host  # Uses the host network instead of a Docker network
+    environment:
+      SSH_HOST: "your-server.com"
+      SSH_USER: "your-username"
+      REMOTE_PORTS: "127.0.0.1:5432 127.0.0.1:443"
+      LOCAL_PORTS: "15432 8443"
+    volumes:
+      - /path/to/id_rsa:/tmp/id_rsa:ro
+```
+📌 Which mode to choose?
+
+ - ✅ Custom network (default) → If services are inside Docker.
+ - ✅ Host mode → If you want to expose the tunnel outside Docker.
 
 ---
 
@@ -151,7 +178,7 @@ This project is open-source and welcomes contributions!
 
 - 🛠 **Source Code & Issues:** [GitHub Repository](https://github.com/RipleyBooya/ssh-tunnel)  
 - 🐳 **Docker Hub Page:** [Docker Image](https://hub.docker.com/r/ripleybooya/ssh-tunnel)  
-- 🇫🇷 **Version française (WikiJS):** [ltgs.wiki (FR)](https://ltgs.wiki/fr/InfoTech/Virt/Docker/ssh-tunnel) 
-- 🇺🇸 **English version (WikiJS):** [ltgs.wiki (EN)](https://ltgs.wiki/en/InfoTech/Virt/Docker/ssh-tunnel) 
+- 🇫🇷 **Version française (WikiJS):** [ltgs.wiki (FR)](https://ltgs.wiki/en/InfoTech/Virt/Docker/ssh-tunnel) 
+- 🇺🇸 **English version (WikiJS):** [ltgs.wiki (EN)](https://ltgs.wiki/fr/InfoTech/Virt/Docker/ssh-tunnel) 
 
 If you find any issues or have suggestions, feel free to open a GitHub issue or contribute! 🚀  
