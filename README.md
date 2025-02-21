@@ -1,7 +1,8 @@
 # 🛡️ SSH Tunnel - Secure Remote Access via SSH Tunnels
 <p align="left">
-  <img src="https://salt8.org/PICS/ssh-tunnel.webp" alt="SSH Tunnel Logo" width="200"/>
+  <img src="https://raw.githubusercontent.com/RipleyBooya/ssh-tunnel/refs/heads/main/ssh-tunnel.webp" alt="SSH Tunnel Logo" width="200"/>
 </p>
+
 
 ## 🚀 **Quick Start**
 For a fast setup, run:
