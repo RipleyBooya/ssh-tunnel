@@ -108,22 +108,50 @@ This project is based on:
 ## 📜 License
 This project is licensed under the **MIT License**.  
 You are free to use, modify, and distribute it.  
-Read the full license [here](https://opensource.org/licenses/MIT).  
-
-📌 **Find the source code & contribute on [GitHub](https://github.com/RipleyBooya/ssh-tunnel)!**  
-
+Read the full license [here](https://opensource.org/licenses/MIT).
 
 ---
 
 ## 🤖 AI Assistance & Acknowledgment
 This project was built with the help of an **AI-powered assistant (LLM)** to improve structure, efficiency, and documentation clarity.
 
----
+
+## 🏗️ How to Build the Image
+
+If you want to build this image yourself, follow these steps:
+
+### **1️⃣ Clone the Repository**
+```sh
+git clone https://github.com/RipleyBooya/ssh-tunnel.git
+cd ssh-tunnel
+```
+
+### **2️⃣ Build for Multi-Architecture (`amd64` & `arm64`)**
+```sh
+docker buildx build --platform linux/amd64,linux/arm64 \
+  -t dockerhub_account/ssh-tunnel:latest \
+  --push .
+```
+
+### **3️⃣ Verify the Image**
+```sh
+docker buildx imagetools inspect dockerhub_account/ssh-tunnel:latest
+```
+
+### **4️⃣ Test Locally**
+```sh
+docker run --rm -it dockerhub_account/ssh-tunnel sh -c "uname -m && echo 'Container is running successfully'"
+```
+
+Now your image is built and ready for use! 🚀
+
 
 ## 🔗 Project Links & Contributions
 This project is open-source and welcomes contributions!  
 
 - 🛠 **Source Code & Issues:** [GitHub Repository](https://github.com/RipleyBooya/ssh-tunnel)  
 - 🐳 **Docker Hub Page:** [Docker Image](https://hub.docker.com/r/ripleybooya/ssh-tunnel)  
+- 🇫🇷 **Version française (WikiJS):** [ltgs.wiki (FR)](https://ltgs.wiki/en/InfoTech/Virt/Docker/ssh-tunnel) 
+- 🇺🇸 **English version (WikiJS):** [ltgs.wiki (EN)](https://ltgs.wiki/fr/InfoTech/Virt/Docker/ssh-tunnel) 
 
 If you find any issues or have suggestions, feel free to open a GitHub issue or contribute! 🚀  
