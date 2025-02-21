@@ -24,7 +24,7 @@ Instead of exposing databases or other services to the public internet, this con
 ## 🚀 How to Use
 
 ### **1️⃣ Run with `docker run`**
-```sh
+```bash
 docker run -d --name ssh-tunnel \
   -e SSH_HOST="your-server.com" \
   -e SSH_USER="your-username" \
@@ -98,6 +98,70 @@ services:
 
 ---
 
+
+## 🚀 Using with Tailscale
+This version integrates Tailscale VPN for secure remote access & expose the port to your tailnet.
+
+To use the Tailscale version you need to append the `tailscale` tag: `ripleybooya/ssh-tunnel:tailscale`
+
+### **Run with `docker run`**
+```bash
+docker run -d --name ssh-tunnel-tailscale \
+  -e SSH_HOST="your-server.com" \
+  -e SSH_USER="your-username" \
+  -e REMOTE_PORTS="127.0.0.1:5432 127.0.0.1:443" \
+  -e LOCAL_PORTS="15432 8443" \
+  -e TAILSCALE_AUTH_KEY="your-tailscale-auth-key" \
+  -v /path/to/id_rsa:/tmp/id_rsa:ro \
+  -p 15432:15432  # (Optional) Also expose port on local network.
+  -p 8443:8443  # (Optional) Also expose port on local network.
+  --cap-add=NET_ADMIN \
+  --device /dev/net/tun:/dev/net/tun \
+  ripleybooya/ssh-tunnel:tailscale
+```
+
+📌 Note:
+
+ - Exposing ports with `-p PORT:PORT` is not mandatory to access the ports from a docker network or your Tailnet.
+ - Only usefull if you want your ports to be exposed to the local network.
+
+---
+
+### **Using `docker-compose.yml`**
+
+```bash
+version: '3.8'
+
+services:
+  ssh-tunnel-tailscale:
+    image: ripleybooya/ssh-tunnel:tailscale
+    container_name: ssh-tunnel-tailscale
+    restart: always
+    environment:
+      SSH_HOST: "your-server.com"
+      SSH_USER: "your-username"
+      REMOTE_PORTS: "127.0.0.1:5432 127.0.0.1:443"
+      LOCAL_PORTS: "15432 8443"
+      TAILSCALE_AUTH_KEY: "your-tailscale-auth-key"
+    volumes:
+      - /path/to/id_rsa:/tmp/id_rsa:ro
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - "15432:15432" # (Optional) Also expose port on local network
+      - "8443:8443"   # (Optional) Also expose port on local network
+```
+
+📌 Note:
+
+ - Exposing ports with "`ports:`" is not mandatory to access the ports from a docker network or your Tailnet.
+ - Only usefull if you want your ports to be exposed to the local network.
+
+
+---
+
 ## 📌 **Why use this image?**
 ✅ **Secure**: No need to expose services publicly.  
 ✅ **Simple**: Just set environment variables and run.  
@@ -107,7 +171,7 @@ services:
 ---
 
 ## 📦 Pull & Run
-```sh
+```bash
 docker pull ripleybooya/ssh-tunnel
 docker run --rm -it ripleybooya/ssh-tunnel sh -c "uname -m && echo 'Container is working'"
 ```
@@ -130,6 +194,7 @@ This image can be used for:
 This project is based on:
 - [Alpine Linux](https://www.alpinelinux.org/) - MIT License
 - [OpenSSH](https://www.openssh.com/) - BSD License
+- [Tailscale](https://tailscale.com/) - MIT License
 - [Docker](https://www.docker.com/) - Apache 2.0 License
 
 ## 📜 License
@@ -149,25 +214,25 @@ Read the full license [here](https://opensource.org/licenses/MIT).
 If you want to build this image yourself, follow these steps:
 
 ### **1️⃣ Clone the Repository**
-```sh
+```bash
 git clone https://github.com/RipleyBooya/ssh-tunnel.git
 cd ssh-tunnel
 ```
 
 ### **2️⃣ Build for Multi-Architecture (`amd64` & `arm64`)**
-```sh
+```bash
 docker buildx build --platform linux/amd64,linux/arm64 \
   -t dockerhub_account/ssh-tunnel:latest \
   --push .
 ```
 
 ### **3️⃣ Verify the Image**
-```sh
+```bash
 docker buildx imagetools inspect dockerhub_account/ssh-tunnel:latest
 ```
 
 ### **4️⃣ Test Locally**
-```sh
+```bash
 docker run --rm -it dockerhub_account/ssh-tunnel sh -c "uname -m && echo 'Container is running successfully'"
 ```
 
