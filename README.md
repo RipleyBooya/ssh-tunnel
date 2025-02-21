@@ -39,7 +39,10 @@ docker run -d --name ssh-tunnel \
 - `SSH_HOST`: The remote server where SSH tunnels will be established.
 - `SSH_USER`: The SSH user on the remote server.
 - `REMOTE_PORTS`: Ports from the remote server (format: `127.0.0.1:PORT`).
-- `LOCAL_PORTS`: Ports inside the Docker network (mapped to `REMOTE_PORTS`).
+- `LOCAL_PORTS`: Ports inside the Docker container (mapped to `REMOTE_PORTS`).
+- `LOGROTATE_FREQUENCY`: Logrotate Frequency (default to `daily`).
+- `LOGROTATE_ROTATE`: Logrotate rotation (default to `7`).
+- `LOGROTATE_COMPRESS`: Logrotate compression (default to `compress`).
 - `-v /path/to/id_rsa:/tmp/id_rsa:ro`: **Mounts your SSH key securely** (using `/tmp/id_rsa` for better permissions).
 
 ---
@@ -113,6 +116,7 @@ docker run -d --name ssh-tunnel-tailscale \
   -e LOCAL_PORTS="15432 8443" \
   -e TAILSCALE_AUTH_KEY="your-tailscale-auth-key" \
   -v /path/to/id_rsa:/tmp/id_rsa:ro \
+  -v /path/to/tailscale/persistent/data:/var/lib/tailscale # Persistent Tailscale state, needed after initial key expiration
   -p 15432:15432  # (Optional) Also expose port on local network.
   -p 8443:8443  # (Optional) Also expose port on local network.
   --cap-add=NET_ADMIN \
@@ -120,10 +124,26 @@ docker run -d --name ssh-tunnel-tailscale \
   ripleybooya/ssh-tunnel:tailscale
 ```
 
-📌 Note:
+📌 **Explanation:**
+- `SSH_HOST`: The remote server where SSH tunnels will be established.
+- `SSH_USER`: The SSH user on the remote server.
+- `REMOTE_PORTS`: Ports from the remote server (format: `127.0.0.1:PORT`).
+- `LOCAL_PORTS`: Ports inside the Docker container (mapped to `REMOTE_PORTS`).
+- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys)).
+- `LOGROTATE_FREQUENCY`: Logrotate Frequency (default to `daily`).
+- `LOGROTATE_ROTATE`: Logrotate rotation (default to `7`).
+- `LOGROTATE_COMPRESS`: Logrotate compression (default to `compress`).
+- `-v /path/to/id_rsa:/tmp/id_rsa:ro`: **Mounts your SSH key securely** (using `/tmp/id_rsa` for better permissions).
 
- - Exposing ports with `-p PORT:PORT` is not mandatory to access the ports from a docker network or your Tailnet.
- - Only usefull if you want your ports to be exposed to the local network.
+
+>  - Exposing ports with `-p PORT:PORT` is not mandatory to access the ports from a docker network or your Tailnet.
+>  - Only usefull if you want your ports to be exposed to the local network.
+{.is-info}
+
+> Without a persistent storage for `/var/lib/tailscale` after the initial key expire, the container will not be able to connect to your Tailnet.
+> {.is-warning}
+
+
 
 ---
 
@@ -145,6 +165,7 @@ services:
       TAILSCALE_AUTH_KEY: "your-tailscale-auth-key"
     volumes:
       - /path/to/id_rsa:/tmp/id_rsa:ro
+      - ssh-tunnel-tailscale-data:/var/lib/tailscale # Persistent Tailscale state, needed after initial key expiration
     cap_add:
       - NET_ADMIN
     devices:
@@ -152,13 +173,27 @@ services:
     ports:
       - "15432:15432" # (Optional) Also expose port on local network
       - "8443:8443"   # (Optional) Also expose port on local network
+volumes:
+  ssh-tunnel-tailscale-data: # Named volume for Tailscale state
 ```
 
-📌 Note:
+📌 **Explanation:**
+- `SSH_HOST`: The remote server where SSH tunnels will be established.
+- `SSH_USER`: The SSH user on the remote server.
+- `REMOTE_PORTS`: Ports from the remote server (format: `127.0.0.1:PORT`).
+- `LOCAL_PORTS`: Ports inside the Docker network (mapped to `REMOTE_PORTS`).
+- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys)).
+- `LOGROTATE_FREQUENCY`: Logrotate Frequency (default to `daily`).
+- `LOGROTATE_ROTATE`: Logrotate rotation (default to `7`).
+- `LOGROTATE_COMPRESS`: Logrotate compression (default to `compress`).
+- `-v /path/to/id_rsa:/tmp/id_rsa:ro`: **Mounts your SSH key securely** (using `/tmp/id_rsa` for better permissions).
 
- - Exposing ports with "`ports:`" is not mandatory to access the ports from a docker network or your Tailnet.
- - Only usefull if you want your ports to be exposed to the local network.
+>  - Exposing ports with "`ports:`" is not mandatory to access the ports from a docker network or your Tailnet.
+>  - Only usefull if you want your ports to be exposed to the local network.
+{.is-info}
 
+> Without a persistent storage for `/var/lib/tailscale` after the initial key expire, the container will not be able to connect to your Tailnet.
+> {.is-warning}
 
 ---
 
