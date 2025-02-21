@@ -151,7 +151,7 @@ This project is open-source and welcomes contributions!
 
 - 🛠 **Source Code & Issues:** [GitHub Repository](https://github.com/RipleyBooya/ssh-tunnel)  
 - 🐳 **Docker Hub Page:** [Docker Image](https://hub.docker.com/r/ripleybooya/ssh-tunnel)  
-- 🇫🇷 **Version française (WikiJS):** [ltgs.wiki (FR)](https://ltgs.wiki/en/InfoTech/Virt/Docker/ssh-tunnel) 
-- 🇺🇸 **English version (WikiJS):** [ltgs.wiki (EN)](https://ltgs.wiki/fr/InfoTech/Virt/Docker/ssh-tunnel) 
+- 🇫🇷 **Version française (WikiJS):** [ltgs.wiki (FR)](https://ltgs.wiki/fr/InfoTech/Virt/Docker/ssh-tunnel) 
+- 🇺🇸 **English version (WikiJS):** [ltgs.wiki (EN)](https://ltgs.wiki/en/InfoTech/Virt/Docker/ssh-tunnel) 
 
 If you find any issues or have suggestions, feel free to open a GitHub issue or contribute! 🚀  
