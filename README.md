@@ -82,7 +82,7 @@ networks:
 ## 📦 Pull & Run
 ```sh
 docker pull ripleybooya/ssh-tunnel
-docker run --rm -it ripleybooya/ssh-tunnel uname -m
+docker run --rm -it ripleybooya/ssh-tunnel sh -c "uname -m && echo 'Container is working'"
 ```
 
 🚀 **Now your remote services are accessible through secure SSH tunnels!**
