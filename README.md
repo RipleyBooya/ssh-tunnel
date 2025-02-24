@@ -170,7 +170,7 @@ services:
       LOCAL_PORTS: "5432 3306"
       TAILSCALE_PARAM: "--reset --auth-key='tskey-client-XXXXXXXXXXXXXXXXX-YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY?ephemeral=true&preauthorized=true' --advertise-tags=tag:dba --hostname=TS-DB-ACCESS"
     volumes:
-      - /root/.ssh/ripley_id_rsa:/tmp/id_rsa:ro
+      - /path/to/id_rsa:/tmp/id_rsa:ro
     cap_add:
       - NET_ADMIN
     devices:
