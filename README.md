@@ -130,12 +130,13 @@ docker run -d --name ssh-tunnel-tailscale \
 - `SSH_USER`: The SSH user on the remote server.
 - `REMOTE_PORTS`: Ports from the remote server (format: `127.0.0.1:PORT`).
 - `LOCAL_PORTS`: Ports inside the Docker container (mapped to `REMOTE_PORTS`).
-- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys)).
+- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys)) /!\ (optionnal) Must be empty if you want to use `TAILSCALE_PARAM`.
+- `TAILSCALE_PARAM`: full control over `tailscale up` options. Usefull if you plan to automate deployment with OAuth Client etc. ([tailscale up command parameters](https://tailscale.com/kb/1241/tailscale-up) & [Registering new nodes using OAuth credentials](https://tailscale.com/kb/1215/oauth-clients#registering-new-nodes-using-oauth-credentials)).
 - `LOGROTATE_FREQUENCY`: Logrotate Frequency (default to `daily`).
 - `LOGROTATE_ROTATE`: Logrotate rotation to keep (default to `7`).
 - `LOGROTATE_COMPRESS`: Logrotate compression (default to `compress`).
 - `-v /path/to/id_rsa:/tmp/id_rsa:ro`: **Mounts your SSH key securely** (using `/tmp/id_rsa` for better permissions).
-- `-v /path/to/tailscale/persistent/data:/var/lib/tailscale`: Required for Persistent Tailscale state.
+- `-v /path/to/tailscale/persistent/data:/var/lib/tailscale`: Required for Persistent Tailscale state. (optionnal)
 
 
 >  - Exposing ports with `-p PORT:PORT` is not mandatory to access the ports from a docker network or your Tailnet.
@@ -153,7 +154,6 @@ docker run -d --name ssh-tunnel-tailscale \
 
 ```bash
 version: '3.8'
-
 services:
   ssh-tunnel-tailscale:
     image: ripleybooya/ssh-tunnel:tailscale
@@ -162,21 +162,15 @@ services:
     environment:
       SSH_HOST: "your-server.com"
       SSH_USER: "your-username"
-      REMOTE_PORTS: "127.0.0.1:5432 127.0.0.1:443"
-      LOCAL_PORTS: "15432 8443"
-      TAILSCALE_AUTH_KEY: "your-tailscale-auth-key"
+      REMOTE_PORTS: "127.0.0.1:5432 127.0.0.1:3306"
+      LOCAL_PORTS: "5432 3306"
+      TAILSCALE_PARAM: "--reset --auth-key='tskey-client-XXXXXXXXXXXXXXXXX-YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY?ephemeral=true&preauthorized=true' --advertise-tags=tag:dba --hostname=TS-DB-ACCESS"
     volumes:
-      - /path/to/id_rsa:/tmp/id_rsa:ro
-      - ssh_tunnel_tailscale_data:/var/lib/tailscale # Persistent Tailscale state, needed after initial key expiration
+      - /root/.ssh/ripley_id_rsa:/tmp/id_rsa:ro
     cap_add:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
-    ports:
-      - "15432:15432" # (Optional) Also expose port on local network
-      - "8443:8443"   # (Optional) Also expose port on local network
-volumes:
-  ssh_tunnel_tailscale_data: # Named volume for Tailscale state
 ```
 
 📌 **Explanation:**
@@ -184,12 +178,13 @@ volumes:
 - `SSH_USER`: The SSH user on the remote server.
 - `REMOTE_PORTS`: Ports from the remote server (format: `127.0.0.1:PORT`).
 - `LOCAL_PORTS`: Ports inside the Docker network (mapped to `REMOTE_PORTS`).
-- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys)).
+- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys)) /!\ (optionnal) Must be empty if you want to use `TAILSCALE_PARAM`.
+- `TAILSCALE_PARAM`: full control over `tailscale up` options. Usefull if you plan to automate deployment with OAuth Client etc. ([tailscale up command parameters](https://tailscale.com/kb/1241/tailscale-up) & [Registering new nodes using OAuth credentials](https://tailscale.com/kb/1215/oauth-clients#registering-new-nodes-using-oauth-credentials)).
 - `LOGROTATE_FREQUENCY`: Logrotate Frequency (default to `daily`).
 - `LOGROTATE_ROTATE`: Logrotate rotation to keep (default to `7`).
 - `LOGROTATE_COMPRESS`: Logrotate compression (default to `compress`).
 - `/path/to/id_rsa:/tmp/id_rsa:ro`: **Mounts your SSH key securely** (using `/tmp/id_rsa` for better permissions).
-- `ssh_tunnel_tailscale_data:/var/lib/tailscale`: Required for Persistent Tailscale state.
+- `ssh_tunnel_tailscale_data:/var/lib/tailscale`: Required for Persistent Tailscale state. (optionnal)
 
 >  - Exposing ports with "`ports:`" is not mandatory to access the ports from a docker network or your Tailnet.
 >  - Only usefull if you want your ports to be exposed to the local network.
