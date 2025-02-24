@@ -147,7 +147,7 @@ docker run -d --name ssh-tunnel-tailscale \
 >  - Only usefull if you want your ports to be exposed to the local network.
 {.is-info}
 
-> Without a persistent storage for `/var/lib/tailscale` after the initial key expire, the container will not be able to connect to your Tailnet.
+> Without [Registering new nodes using OAuth credentials](https://tailscale.com/kb/1215/oauth-clients#registering-new-nodes-using-oauth-credentials) or a persistent storage for `/var/lib/tailscale` after the initial key expire, the container will not be able to connect to your Tailnet.
 > {.is-warning}
 
 
@@ -198,7 +198,7 @@ services:
 >  - Only usefull if you want your ports to be exposed to the local network.
 {.is-info}
 
-> Without a persistent storage for `/var/lib/tailscale` after the initial key expire, the container will not be able to connect to your Tailnet.
+> Without [Registering new nodes using OAuth credentials](https://tailscale.com/kb/1215/oauth-clients#registering-new-nodes-using-oauth-credentials) or a persistent storage for `/var/lib/tailscale` after the initial key expire, the container will not be able to connect to your Tailnet.
 > {.is-warning}
 
 ---
