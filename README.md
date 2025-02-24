@@ -130,8 +130,10 @@ docker run -d --name ssh-tunnel-tailscale \
 - `SSH_USER`: The SSH user on the remote server.
 - `REMOTE_PORTS`: Ports from the remote server (format: `127.0.0.1:PORT`).
 - `LOCAL_PORTS`: Ports inside the Docker container (mapped to `REMOTE_PORTS`).
-- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys)) /!\ (optionnal) Must be empty if you want to use `TAILSCALE_PARAM`.
-- `TAILSCALE_PARAM`: full control over `tailscale up` options. Usefull if you plan to automate deployment with OAuth Client etc. ([tailscale up command parameters](https://tailscale.com/kb/1241/tailscale-up) & [Registering new nodes using OAuth credentials](https://tailscale.com/kb/1215/oauth-clients#registering-new-nodes-using-oauth-credentials)).
+- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (optionnal) /!\ Must be empty if you want to use `TAILSCALE_PARAM`.
+(You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys))
+- `TAILSCALE_PARAM`: full control over `tailscale up` options. Usefull if you plan to automate deployment with OAuth Client etc.
+([tailscale up command parameters](https://tailscale.com/kb/1241/tailscale-up) & [Registering new nodes using OAuth credentials](https://tailscale.com/kb/1215/oauth-clients#registering-new-nodes-using-oauth-credentials)).
 - `LOGROTATE_FREQUENCY`: Logrotate Frequency (default to `daily`).
 - `LOGROTATE_ROTATE`: Logrotate rotation to keep (default to `7`).
 - `LOGROTATE_COMPRESS`: Logrotate compression (default to `compress`).
@@ -178,8 +180,10 @@ services:
 - `SSH_USER`: The SSH user on the remote server.
 - `REMOTE_PORTS`: Ports from the remote server (format: `127.0.0.1:PORT`).
 - `LOCAL_PORTS`: Ports inside the Docker network (mapped to `REMOTE_PORTS`).
-- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys)) /!\ (optionnal) Must be empty if you want to use `TAILSCALE_PARAM`.
-- `TAILSCALE_PARAM`: full control over `tailscale up` options. Usefull if you plan to automate deployment with OAuth Client etc. ([tailscale up command parameters](https://tailscale.com/kb/1241/tailscale-up) & [Registering new nodes using OAuth credentials](https://tailscale.com/kb/1215/oauth-clients#registering-new-nodes-using-oauth-credentials)).
+- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (optionnal) /!\ Must be empty if you want to use `TAILSCALE_PARAM`.
+(You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys))
+- `TAILSCALE_PARAM`: full control over `tailscale up` options. Usefull if you plan to automate deployment with OAuth Client etc.
+([tailscale up command parameters](https://tailscale.com/kb/1241/tailscale-up) & [Registering new nodes using OAuth credentials](https://tailscale.com/kb/1215/oauth-clients#registering-new-nodes-using-oauth-credentials)).
 - `LOGROTATE_FREQUENCY`: Logrotate Frequency (default to `daily`).
 - `LOGROTATE_ROTATE`: Logrotate rotation to keep (default to `7`).
 - `LOGROTATE_COMPRESS`: Logrotate compression (default to `compress`).
