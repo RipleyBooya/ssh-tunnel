@@ -1,17 +1,18 @@
 # Use Alpine Linux
 FROM alpine:latest
 
-# Install required packages
-RUN apk add --no-cache openssh-client autossh bash logrotate gettext tailscale
+# Install required packages, including iptables
+RUN apk add --no-cache openssh-client autossh bash logrotate gettext tailscale iptables ip6tables
 
 # Define required environment variables
 ENV SSH_HOST=""
 ENV SSH_USER=""
 ENV REMOTE_PORTS=""
 ENV LOCAL_PORTS=""
-# New: Allows full customization of tailscale up command
+# Default authentication key (optional)
+ENV TAILSCALE_AUTH_KEY=""
+# Custom parameters
 ENV TAILSCALE_PARAM=""
-# OLD: ENV TAILSCALE_AUTH_KEY="" 
 ENV LOGROTATE_FREQUENCY="daily"
 ENV LOGROTATE_ROTATE="7"
 ENV LOGROTATE_COMPRESS="compress"
@@ -22,7 +23,7 @@ RUN mkdir -p /var/log/ssh-tunnel && chmod 777 /var/log/ssh-tunnel
 RUN mkdir -p /var/lib/tailscale && chmod 700 /var/lib/tailscale
 
 # Copy scripts
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.tailscale.sh /entrypoint.sh
 COPY logrotate.template /logrotate.template
 RUN chmod +x /entrypoint.sh
 
