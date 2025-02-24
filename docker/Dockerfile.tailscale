@@ -11,8 +11,7 @@ ENV REMOTE_PORTS=""
 ENV LOCAL_PORTS=""
 # New: Allows full customization of tailscale up command
 ENV TAILSCALE_PARAM=""
-# Fallback if TAILSCALE_PARAM is empty/not set
-ENV TAILSCALE_AUTH_KEY="" 
+# OLD: ENV TAILSCALE_AUTH_KEY="" 
 ENV LOGROTATE_FREQUENCY="daily"
 ENV LOGROTATE_ROTATE="7"
 ENV LOGROTATE_COMPRESS="compress"
