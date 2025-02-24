@@ -130,7 +130,9 @@ docker run -d --name ssh-tunnel-tailscale \
 - `SSH_USER`: The SSH user on the remote server.
 - `REMOTE_PORTS`: Ports from the remote server (format: `127.0.0.1:PORT`).
 - `LOCAL_PORTS`: Ports inside the Docker container (mapped to `REMOTE_PORTS`).
-- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (optionnal) /!\ Must be empty if you want to use `TAILSCALE_PARAM`.
+- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (optionnal)
+
+/!\ Must be empty if you want to use `TAILSCALE_PARAM`.
 
 (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys))
 - `TAILSCALE_PARAM`: full control over `tailscale up` options. Usefull if you plan to automate deployment with OAuth Client etc.
@@ -182,7 +184,9 @@ services:
 - `SSH_USER`: The SSH user on the remote server.
 - `REMOTE_PORTS`: Ports from the remote server (format: `127.0.0.1:PORT`).
 - `LOCAL_PORTS`: Ports inside the Docker network (mapped to `REMOTE_PORTS`).
-- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (optionnal) /!\ Must be empty if you want to use `TAILSCALE_PARAM`.
+- `TAILSCALE_AUTH_KEY`: Initial Tailscale Authentication Key (optionnal)
+
+/!\ Must be empty if you want to use `TAILSCALE_PARAM`.
 
 (You can generate a key here: [Tailscale Keys](https://login.tailscale.com/admin/settings/keys))
 - `TAILSCALE_PARAM`: full control over `tailscale up` options. Usefull if you plan to automate deployment with OAuth Client etc.
