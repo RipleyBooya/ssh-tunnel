@@ -3,8 +3,8 @@
 set -e
 
 # Vérification des variables d'environnement requises
-if [ -z "$SSH_HOST" ] || [ -z "$SSH_USER" ] || [ -z "$REMOTE_PORTS" ] || [ -z "$LOCAL_PORTS" ] || [ -z "$TAILSCALE_AUTH_KEY" ]; then
-  echo "ERROR: Required variables (SSH_HOST, SSH_USER, REMOTE_PORTS, LOCAL_PORTS, TAILSCALE_AUTH_KEY) are missing."
+if [ -z "$SSH_HOST" ] || [ -z "$SSH_USER" ] || [ -z "$REMOTE_PORTS" ] || [ -z "$LOCAL_PORTS" ]; then
+  echo "ERROR: Required variables (SSH_HOST, SSH_USER, REMOTE_PORTS, LOCAL_PORTS) are missing."
   exit 1
 fi
 
@@ -14,7 +14,17 @@ tailscaled --state=/var/lib/tailscale/tailscaled.state --socket=/var/run/tailsca
 
 sleep 5
 echo "Connecting to Tailscale..."
-tailscale up --authkey=${TAILSCALE_AUTH_KEY} --ssh
+
+# Vérifier si TAILSCALE_PARAM est défini, sinon utiliser la clé d'authentification par défaut
+if [ -n "$TAILSCALE_PARAM" ]; then
+  tailscale up $TAILSCALE_PARAM
+else
+  if [ -z "$TAILSCALE_AUTH_KEY" ]; then
+    echo "ERROR: Either TAILSCALE_PARAM or TAILSCALE_AUTH_KEY must be set."
+    exit 1
+  fi
+  tailscale up --authkey=${TAILSCALE_AUTH_KEY} --ssh
+fi
 
 # Vérifier que Tailscale est bien actif
 if ! tailscale status; then
