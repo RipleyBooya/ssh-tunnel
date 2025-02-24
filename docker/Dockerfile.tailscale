@@ -9,8 +9,10 @@ ENV SSH_HOST=""
 ENV SSH_USER=""
 ENV REMOTE_PORTS=""
 ENV LOCAL_PORTS=""
-ENV TAILSCALE_PARAM="" # New: Allows full customization of tailscale up command
-ENV TAILSCALE_AUTH_KEY="" # Fallback if TAILSCALE_PARAM is empty/not set
+# New: Allows full customization of tailscale up command
+ENV TAILSCALE_PARAM=""
+# Fallback if TAILSCALE_PARAM is empty/not set
+ENV TAILSCALE_AUTH_KEY="" 
 ENV LOGROTATE_FREQUENCY="daily"
 ENV LOGROTATE_ROTATE="7"
 ENV LOGROTATE_COMPRESS="compress"
