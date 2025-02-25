@@ -212,9 +212,7 @@ services:
 This Docker image is rebuilt automatically **every day** to ensure it always includes:
 
 ✅ The latest security updates from the Alpine base image.
-
 ✅ The most recent versions of system dependencies.
-
 ✅ Potential performance improvements from the build process.
 
 ⚠ Note: These daily builds do not necessarily mean changes to the project itself.
