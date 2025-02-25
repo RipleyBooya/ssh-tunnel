@@ -66,7 +66,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Build and push Tailscale variant (tag: tailscale)
+      - name: "Build and push Tailscale variant (tag: tailscale)"
         id: build-and-push-tailscale
         uses: docker/build-push-action@v5
         with:
