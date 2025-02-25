@@ -7,13 +7,13 @@
   "target": {
     "default": {
       "dockerfile": "docker/Dockerfile",
-      "context": ".",
+      "context": "docker",
       "tags": ["ripleybooya/ssh-tunnel:latest"],
       "platforms": ["linux/amd64", "linux/arm64"]
     },
     "tailscale": {
       "dockerfile": "docker/Dockerfile.tailscale",
-      "context": ".",
+      "context": "docker",
       "tags": ["ripleybooya/ssh-tunnel:tailscale"],
       "platforms": ["linux/amd64", "linux/arm64"]
     }
