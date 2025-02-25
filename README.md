@@ -211,9 +211,9 @@ services:
 
 This Docker image is rebuilt automatically **every day** to ensure it always includes:
 
-✅ The latest security updates from the Alpine base image.
-✅ The most recent versions of system dependencies.
-✅ Potential performance improvements from the build process.
+ - ✅ The latest security updates from the Alpine base image.
+ - ✅ The most recent versions of system dependencies.
+ - ✅ Potential performance improvements from the build process.
 
 ⚠ Note: These daily builds do not necessarily mean changes to the project itself.
 If you're looking for actual updates to the codebase, please refer to the [commit history](https://github.com/RipleyBooya/ssh-tunnel/commits/main) or the [release tags](https://github.com/RipleyBooya/ssh-tunnel/releases).
@@ -221,10 +221,10 @@ If you're looking for actual updates to the codebase, please refer to the [commi
 ---
 
 ## 📌 **Why use this image?**
-✅ **Secure**: No need to expose services publicly.  
-✅ **Simple**: Just set environment variables and run.  
-✅ **Multi-Arch**: Works on **x86_64 (Intel/AMD)** and **ARM64 (Oracle Cloud, Raspberry Pi, etc.)**.  
-✅ **Lightweight**: Uses **Alpine Linux** for minimal resource usage.  
+ - ✅ **Secure**: No need to expose services publicly.  
+ - ✅ **Simple**: Just set environment variables and run.  
+ - ✅ **Multi-Arch**: Works on **x86_64 (Intel/AMD)** and **ARM64 (Oracle Cloud, Raspberry Pi, etc.)**.  
+ - ✅ **Lightweight**: Uses **Alpine Linux** for minimal resource usage.  
 
 ---
 
