@@ -1,0 +1,19 @@
+{
+  "group": {
+    "default": {
+      "targets": ["default", "tailscale"]
+    }
+  },
+  "target": {
+    "default": {
+      "dockerfile": "Dockerfile",
+      "tags": ["ripleybooya/ssh-tunnel:latest"],
+      "platforms": ["linux/amd64", "linux/arm64"]
+    },
+    "tailscale": {
+      "dockerfile": "Dockerfile.tailscale",
+      "tags": ["ripleybooya/ssh-tunnel:tailscale"],
+      "platforms": ["linux/amd64", "linux/arm64"]
+    }
+  }
+}
