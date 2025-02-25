@@ -84,4 +84,5 @@ exec autossh -M 0 \
   -o "UserKnownHostsFile=/dev/null" \
   -o "ServerAliveInterval=60" \
   -o "ServerAliveCountMax=3" \
+  -o "Compression=yes" \
   -N ${TUNNEL_CMD} ${SSH_USER}@${SSH_HOST}
