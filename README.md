@@ -215,7 +215,7 @@ This Docker image is rebuilt automatically **every day** to ensure it always inc
  - ✅ The most recent versions of system dependencies.
  - ✅ Potential performance improvements from the build process.
 
-⚠ Note: These daily builds do not necessarily mean changes to the project itself.
+⚠ Note: These daily builds do not necessarily mean changes to the project itself.  
 If you're looking for actual updates to the codebase, please refer to the [commit history](https://github.com/RipleyBooya/ssh-tunnel/commits/main) or the [release tags](https://github.com/RipleyBooya/ssh-tunnel/releases).
 
 ---
