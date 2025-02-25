@@ -50,8 +50,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      # 🏗 Build et push de l'image standard (latest) et version Tailscale (tailscale)
-      - name: Build and push standard & tailscale Docker images
+      # 🏗 Build et push de l'image standard (latest)
+      - name: "Build and push standard Docker image (tag: latest)"
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
@@ -62,10 +62,11 @@ jobs:
             ${{ env.REGISTRY_GHCR }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY_DOCKERHUB }}/${{ env.IMAGE_NAME }}:latest
           labels: |
-            org.opencontainers.image.source=${{ github.repositoryUrl }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      # 🏗 Build et push de la version Tailscale
       - name: "Build and push Tailscale variant (tag: tailscale)"
         id: build-and-push-tailscale
         uses: docker/build-push-action@v5
@@ -78,11 +79,15 @@ jobs:
             ${{ env.REGISTRY_GHCR }}/${{ env.IMAGE_NAME }}:tailscale
             ${{ env.REGISTRY_DOCKERHUB }}/${{ env.IMAGE_NAME }}:tailscale
           labels: |
-            org.opencontainers.image.source=${{ github.repositoryUrl }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # 🔒 Signature de l’image avec Cosign
+      # 🔒 Installer Cosign avant de signer les images
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3
+
+      # 🔒 Signature des images après le push
       - name: Sign the published Docker images
         if: ${{ github.event_name != 'pull_request' }}
         env:
@@ -91,8 +96,11 @@ jobs:
             ${{ env.REGISTRY_GHCR }}/${{ env.IMAGE_NAME }}:tailscale
             ${{ env.REGISTRY_DOCKERHUB }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY_DOCKERHUB }}/${{ env.IMAGE_NAME }}:tailscale
-          DIGEST: ${{ steps.build-and-push.outputs.digest }}
-        run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+          DIGEST_LATEST: ${{ steps.build-and-push.outputs.digest }}
+          DIGEST_TAILSCALE: ${{ steps.build-and-push-tailscale.outputs.digest }}
+        run: |
+          echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST_LATEST}
+          echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST_TAILSCALE}
 
       # 🔹 Mise à jour automatique de la description du repository Docker Hub
       - name: Update Docker Hub Description
@@ -100,6 +108,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-          repository: ripleybooya/ssh-tunnel  # Remplace par ton namespace/nom de repo sur Docker Hub
+          repository: ripleybooya/ssh-tunnel  # Nom du repo Docker Hub
           readme-filepath: ./README.md  # Récupère la description depuis le README GitHub
-
