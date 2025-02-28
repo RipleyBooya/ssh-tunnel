@@ -1,0 +1,33 @@
+# Dockerfile mis à jour pour inclure PgBouncer et conserver Tailscale
+FROM alpine:latest
+
+# Installation des paquets nécessaires
+RUN apk add --no-cache openssh-client autossh bash logrotate gettext pgbouncer tailscale iptables ip6tables
+
+# Définition des variables d'environnement
+ENV SSH_HOST=""
+ENV SSH_USER=""
+ENV REMOTE_PORTS="127.0.0.1:5432"
+ENV LOCAL_PORTS="15432"
+ENV PGB_CONFIG="/etc/pgbouncer/pgbouncer.ini"
+# Variables supplémentaires pour Tailscale et Logrotate
+ENV TAILSCALE_AUTH_KEY=""
+ENV TAILSCALE_PARAM=""
+ENV LOGROTATE_FREQUENCY="daily"
+ENV LOGROTATE_ROTATE="7"
+ENV LOGROTATE_COMPRESS="compress"
+
+# Création des répertoires nécessaires
+RUN mkdir -p /root/.ssh && chmod 700 /root/.ssh
+RUN mkdir -p /var/log/ssh-tunnel && chmod 777 /var/log/ssh-tunnel
+RUN mkdir -p /var/lib/tailscale && chmod 700 /var/lib/tailscale
+RUN mkdir -p /etc/pgbouncer
+
+# Copie des fichiers de configuration et des scripts
+COPY entrypoint.tailscale_pgbouncer.sh /entrypoint.sh
+COPY logrotate.template /logrotate.template
+COPY pgbouncer.ini /etc/pgbouncer/pgbouncer.ini
+RUN chmod +x /entrypoint.sh
+
+# Commande d'exécution par défaut
+CMD ["/entrypoint.sh"]
