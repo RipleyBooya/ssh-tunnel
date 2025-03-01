@@ -1,0 +1,44 @@
+# Docker compose example file containing 
+services:
+  ssh-tunnel-tailscale:
+    image: ripleybooya/ssh-tunnel:tailscale
+    container_name: ${DB_HOST}
+    restart: always
+    environment:
+      - "TZ=${TZ}"
+      - "SSH_HOST=${SSH_HOST}"
+      - "SSH_USER=${SSH_USER}"
+      - "REMOTE_PORTS=${REMOTE_PORTS}"
+      - "LOCAL_PORTS=${LOCAL_PORTS}"
+      - "TAILSCALE_PARAM=${TAILSCALE_PARAM}"
+    volumes:
+      - "${KEY_PATH}:/tmp/id_rsa:ro"
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    networks:
+      - proxy
+
+  pgbouncer:
+    container_name: pgbouncer
+    image: edoburu/pgbouncer:latest
+    environment:
+      - "TZ=${TZ}"
+      - "TZ=${TZ}"
+      - "DB_NAME=${DB_NAME}"
+      - "DB_USER=${DB_USER}"
+      - "DB_PASSWORD=${DB_PASSWORD}"
+      - "DB_HOST=${DB_HOST}"
+      - "POOL_MODE=${POOL_MODE}"
+      - "MAX_CLIENT_CONN=${MAX_CLIENT_CONN}"
+      - "DEFAULT_POOL_SIZE=${DEFAULT_POOL_SIZE}"
+      - "ADMIN_USERS=${DB_USER}"
+      - "AUTH_USER=${DB_USER}"
+
+    networks:
+      - proxy # or any network you use
+
+networks:
+  proxy: # or any network you use
+    external: true
