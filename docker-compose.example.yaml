@@ -1,4 +1,4 @@
-# Docker compose example file containing 
+# Docker compose example file containing the ssh-tunnel:tailscale variant + a pgbouncer for a PostgreSQL on the ssh target server.
 services:
   ssh-tunnel-tailscale:
     image: ripleybooya/ssh-tunnel:tailscale
